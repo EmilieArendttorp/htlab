@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - GestureSphere
+  - IndexSphere
+  - GestureManager
+  - OVRHandL
+  - OVRHandR
+  - OriginSphere_L
+  - OriginSphere_R
   layers:
   - Default
   - TransparentFX
