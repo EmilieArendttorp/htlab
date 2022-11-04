@@ -85,7 +85,7 @@ public class RecognizeDynamicLHand : MonoBehaviour
             }
 
             // Tries to invoke the name of the current gesture being performed
-            if (leftHGesture.currentGesture_L.name != null && leftHGesture.currentGesture_L.name != previousGesture_L.name)
+            if (leftHGesture.currentGesture_L.name != null)
             {
                 try
                 {

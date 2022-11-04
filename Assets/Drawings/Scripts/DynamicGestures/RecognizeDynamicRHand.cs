@@ -81,7 +81,7 @@ public class RecognizeDynamicRHand : MonoBehaviour
                 }
             }
 
-            if (rightHGesture.currentGesture_R.name != null && rightHGesture.currentGesture_R.name != previousGesture_R.name)
+            if (rightHGesture.currentGesture_R.name != null)
             {
                 try
                 {

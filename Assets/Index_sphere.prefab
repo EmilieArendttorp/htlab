@@ -51,7 +51,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 87963413587803993}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -127,5 +127,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba01126bfa68d4e48b12e94b4190451a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  indexOriginThreshold: 0.5
+  headset: {fileID: 0}
+  indexOriginThreshold: 0.8
   sphereFingerIndex: 8

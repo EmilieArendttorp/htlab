@@ -96,12 +96,12 @@ public class SphereDetector : MonoBehaviour
         var currentHandPos = hand.transform.position;
         bool pulledHandBack = lastHandPos.y - currentHandPos.y < 0;
 
-        if(pulledHandBack)
-        {
-            var difference = lastHandPos - currentHandPos;
-            var newHeadsetPos = headset.position - difference;
-            headset.position = Vector3.MoveTowards(headset.position, newHeadsetPos, 1f * Time.deltaTime);
-        }
+        // if(pulledHandBack)
+        // {
+        //     var difference = lastHandPos - currentHandPos;
+        //     var newHeadsetPos = headset.position - difference;
+        //     headset.position = Vector3.MoveTowards(headset.position, newHeadsetPos, 1f * Time.deltaTime);
+        // }
         //if(Vector3.Distance(headset.position, dynamicGestureCreator.dynamicGestures[0].spherePos[sphereNumber]) > 0.01)
         //{
         //}
