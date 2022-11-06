@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GestureFunctions : MonoBehaviour
 {
+    [SerializeField] float crawlSpeed = 1f;
     public MeshRenderer boxRend;
 
     
@@ -11,6 +12,9 @@ public class GestureFunctions : MonoBehaviour
     HandInitializer handInitializer;
     RecognizeDynamicRHand recognizeDynamic_R;
     RecognizeDynamicLHand recognizeDynamic_L;
+    Transform headset;
+    GameObject rightHand;
+    GameObject leftHand;
 
     private SphereDetector _sphereDetector;
     private Vector3 _lastHandPos = Vector3.zero;
@@ -19,7 +23,10 @@ public class GestureFunctions : MonoBehaviour
     {
         handInitializer = GetComponent<HandInitializer>();
         recognizeDynamic_R = GetComponent<RecognizeDynamicRHand>();
-        recognizeDynamic_L = GetComponent<RecognizeDynamicLHand>();        
+        recognizeDynamic_L = GetComponent<RecognizeDynamicLHand>();
+        headset = FindObjectOfType<OVRCameraRig>().transform;
+        rightHand = GameObject.FindGameObjectWithTag("OVRHandR");
+        leftHand = GameObject.FindGameObjectWithTag("OVRHandL");
     }
     // Between these comments may not be necessary
     
@@ -31,30 +38,26 @@ public class GestureFunctions : MonoBehaviour
 
     void RightHandCrawl()
     {
-        var headset = FindObjectOfType<OVRCameraRig>().transform;
-        var hand = GameObject.FindGameObjectWithTag("OVRHandR");
         //if (hand is null) return;
         
-        var currentHandPos = hand.transform.position;
+        var currentHandPos = rightHand.transform.position;
         var difference = _lastHandPos - currentHandPos;
         var headsetPosition = headset.position;
         var newPos = new Vector3(headsetPosition.x + difference.x, headsetPosition.y, headsetPosition.z + difference.z );
-        headsetPosition = Vector3.MoveTowards(headsetPosition, newPos, 1f * Time.deltaTime);
+        headsetPosition = Vector3.MoveTowards(headsetPosition, newPos, crawlSpeed * Time.deltaTime);
         headset.position = headsetPosition;
         _lastHandPos = currentHandPos;
     }
 
     void LeftHandCrawl()
     {
-        var headset = FindObjectOfType<OVRCameraRig>().transform;
-        var hand = GameObject.FindGameObjectWithTag("OVRHandL");
         //if (hand is null) return;
         
-        var currentHandPos = hand.transform.position;
+        var currentHandPos = leftHand.transform.position;
         var difference = _lastHandPos - currentHandPos;
         var headsetPosition = headset.position;
         var newPos = new Vector3(headsetPosition.x + difference.x, headsetPosition.y, headsetPosition.z + difference.z );
-        headsetPosition = Vector3.MoveTowards(headsetPosition, newPos, 1f * Time.deltaTime);
+        headsetPosition = Vector3.MoveTowards(headsetPosition, newPos, crawlSpeed * Time.deltaTime);
         headset.position = headsetPosition;
         _lastHandPos = currentHandPos;
     }
