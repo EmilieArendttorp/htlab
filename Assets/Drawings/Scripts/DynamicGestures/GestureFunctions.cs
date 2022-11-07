@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GestureFunctions : MonoBehaviour
 {
@@ -15,9 +17,13 @@ public class GestureFunctions : MonoBehaviour
     Transform headset;
     GameObject rightHand;
     GameObject leftHand;
+    
+    private RecognizeStaticLHand recStaticL;
+    private RecognizeStaticRHand recStaticR;
 
     private SphereDetector _sphereDetector;
-    private Vector3 _lastHandPos = Vector3.zero;
+    private Vector3 _lastLeftHandPos = Vector3.zero;
+    private Vector3 _lastRightHandPos = Vector3.zero;
 
     private void Start()
     {
@@ -27,9 +33,17 @@ public class GestureFunctions : MonoBehaviour
         headset = FindObjectOfType<OVRCameraRig>().transform;
         rightHand = GameObject.FindGameObjectWithTag("OVRHandR");
         leftHand = GameObject.FindGameObjectWithTag("OVRHandL");
+
+        recStaticL = GetComponent<RecognizeStaticLHand>();
+        recStaticR = GetComponent<RecognizeStaticRHand>();
     }
     // Between these comments may not be necessary
-    
+
+    private void Update()
+    {
+        if (recStaticL.currentGesture_L.name == null) _lastLeftHandPos = Vector3.zero;
+        if (recStaticR.currentGesture_R.name == null) _lastRightHandPos = Vector3.zero;
+    }
 
     void M()
     {
@@ -38,27 +52,21 @@ public class GestureFunctions : MonoBehaviour
 
     void RightHandCrawl()
     {
-        //if (hand is null) return;
-        
         var currentHandPos = rightHand.transform.position;
-        var difference = _lastHandPos - currentHandPos;
-        var headsetPosition = headset.position;
-        var newPos = new Vector3(headsetPosition.x + difference.x, headsetPosition.y, headsetPosition.z + difference.z );
-        headsetPosition = Vector3.MoveTowards(headsetPosition, newPos, crawlSpeed * Time.deltaTime);
-        headset.position = headsetPosition;
-        _lastHandPos = currentHandPos;
+        if (_lastRightHandPos.Equals(Vector3.zero)) _lastRightHandPos = currentHandPos;
+        
+        var difference = (_lastRightHandPos - currentHandPos) * crawlSpeed;
+        headset.position += new Vector3(difference.x, 0, difference.z);
+        _lastRightHandPos = currentHandPos + difference;
     }
 
     void LeftHandCrawl()
     {
-        //if (hand is null) return;
-        
         var currentHandPos = leftHand.transform.position;
-        var difference = _lastHandPos - currentHandPos;
-        var headsetPosition = headset.position;
-        var newPos = new Vector3(headsetPosition.x + difference.x, headsetPosition.y, headsetPosition.z + difference.z );
-        headsetPosition = Vector3.MoveTowards(headsetPosition, newPos, crawlSpeed * Time.deltaTime);
-        headset.position = headsetPosition;
-        _lastHandPos = currentHandPos;
+        if (_lastLeftHandPos.Equals(Vector3.zero)) _lastLeftHandPos = currentHandPos;
+        
+        var difference = (_lastLeftHandPos - currentHandPos) * crawlSpeed;
+        headset.position += new Vector3(difference.x, 0, difference.z);
+        _lastLeftHandPos = currentHandPos + difference;
     }
 }
