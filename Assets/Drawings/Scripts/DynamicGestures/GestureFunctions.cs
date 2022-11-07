@@ -54,8 +54,10 @@ public class GestureFunctions : MonoBehaviour
     {
         var currentHandPos = rightHand.transform.position;
         if (_lastRightHandPos.Equals(Vector3.zero)) _lastRightHandPos = currentHandPos;
+        else if (!handInitializer.rightHandSkeleton.IsDataHighConfidence) return;
         
         var difference = (_lastRightHandPos - currentHandPos) * crawlSpeed;
+        
         headset.position += new Vector3(difference.x, 0, difference.z);
         _lastRightHandPos = currentHandPos + difference;
     }
@@ -64,8 +66,10 @@ public class GestureFunctions : MonoBehaviour
     {
         var currentHandPos = leftHand.transform.position;
         if (_lastLeftHandPos.Equals(Vector3.zero)) _lastLeftHandPos = currentHandPos;
+        else if (!handInitializer.leftHandSkeleton.IsDataHighConfidence) return;
         
         var difference = (_lastLeftHandPos - currentHandPos) * crawlSpeed;
+        
         headset.position += new Vector3(difference.x, 0, difference.z);
         _lastLeftHandPos = currentHandPos + difference;
     }
